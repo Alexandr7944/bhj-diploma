@@ -12,7 +12,12 @@ class UserWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor(element){
-
+    if(element) {
+      this.element = element;
+      this.update();
+    } else {
+      console.error('Пользователь не задан');
+    }
   }
 
   /**
@@ -23,6 +28,8 @@ class UserWidget {
    * авторизованного пользователя
    * */
   update(){
-
+    const user = User.current();
+    const name = document.querySelector('.user-name');
+    name.textContent = user ? user.name : 'Пользователь';
   }
 }
