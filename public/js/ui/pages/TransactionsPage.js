@@ -105,7 +105,7 @@ class TransactionsPage {
         }
       })
 
-      Transaction.list(options, (err, response) => {
+      Transaction.list({account_id: options.account_id.id}, (err, response) => {
         if(response && response.success) {
           this.renderTransactions(response.data);
         }else{
@@ -169,7 +169,7 @@ class TransactionsPage {
             <span class="fa fa-money fa-2x"></span>
         </div>
         <div class="transaction__info">
-            <h4 class="transaction__title">Новый будильник</h4>
+            <h4 class="transaction__title">${item.name}</h4>
             <div class="transaction__date">${this.formatDate(item.created_at)}</div>
         </div>
       </div>
@@ -193,8 +193,8 @@ class TransactionsPage {
   renderTransactions(data){
     const content = document.querySelector('.content');
     content.innerHTML = '';
-    for(let i = 0; i < content.clientHeight; i++) {
-      content.innerHTML += this.getTransactionHTML(content[i]);
+    for(let i = 0; i < data.length; i++) {
+      content.innerHTML += this.getTransactionHTML(data[i]);
     }
   }
 }
