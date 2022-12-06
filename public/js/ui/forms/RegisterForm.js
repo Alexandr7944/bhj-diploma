@@ -12,16 +12,12 @@ class RegisterForm extends AsyncForm {
   onSubmit(data) {
     User.register(data, ( err, response ) => {
       if(response && response.success) {
-        App.setState( 'user-logged' );
-        this.element.closest('.modal').style.display = '';
         this.element.reset();
+        App.setState( 'user-logged' );
+        new Modal(this.element.closest('.modal')).close(); //не уверен, что это нормально, прошу дать комментарий
       }else{
         console.log(err);
       }
     });
-
-    // const btn = this.element.closest('.modal').querySelector('.btn-primary');
-    // btn.onclick = this.close();
-    // this.element.closest('.modal').style.display = ''; //найти способ реализации через метод close
   }
 }

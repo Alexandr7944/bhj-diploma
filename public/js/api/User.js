@@ -109,10 +109,11 @@ class User {
       url: '/user/logout',
       method: 'POST',
       responseType: 'json',
+      data: JSON.parse(localStorage.user),
       callback: (err, response) => {
-        // callback(err, response);
         if(response && response.success) {
           this.unsetCurrent(response.user);
+          callback(err, response);
         } else {
           console.warn(err);
         }

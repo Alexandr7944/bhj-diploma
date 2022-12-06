@@ -14,7 +14,7 @@ class TransactionsPage {
     if(element) {
       this.element = element;
     }else{
-      console.log('TransactionsPage не передан element');
+      console.log('в TransactionsPage не передан element');
     }
     this.lastOptions;
     this.registerEvents();
@@ -35,12 +35,14 @@ class TransactionsPage {
    * */
   registerEvents() {
     const removeAccount = document.querySelector('.remove-account');
-    removeAccount.addEventListener('click', this.removeAccount);
+    removeAccount.addEventListener('click', () => this.removeAccount());
 
-    const transactionRemove = document.querySelector('.transaction__remove');
-    if(transactionRemove) {
-      transactionRemove.addEventListener('click', this.removeTransaction(this.lastOptions))
-    };
+    const transactionRemove = document.querySelectorAll('.transaction__remove');
+    for(let i = 0; i < transactionRemove.length; i++) {
+      transactionRemove[i].addEventListener('click', () => {
+        this.removeTransaction(transactionRemove[i].dataset);
+      })
+    }
   }
 
   /**
@@ -54,7 +56,7 @@ class TransactionsPage {
    * */
   removeAccount() {
     if(this.lastOptions && confirm('Вы действительно хотите удалить счёт?')) {
-      Account.remove(this.lastOptions, (err, response) => {
+      Account.remove(this.lastOptions.account_id, (err, response) => {
         if(response && response.success) {
           App.updateWidgets();
           App.updateForms();
@@ -62,6 +64,7 @@ class TransactionsPage {
           console.log('TransactionsPage отсутствует ответ для Account.remove', err);
         }
       });
+      this.clear();
     }
   }
 
@@ -196,5 +199,6 @@ class TransactionsPage {
     for(let i = 0; i < data.length; i++) {
       content.innerHTML += this.getTransactionHTML(data[i]);
     }
+    this.registerEvents();
   }
 }

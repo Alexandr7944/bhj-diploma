@@ -37,9 +37,7 @@ class AccountsWidget {
   registerEvents() {
     const createAccount = document.querySelector('.create-account');
     createAccount.addEventListener('click', () => {
-      // App.getModal('newAccount').open(); undefined не находит App.getModal('newAccount')
-      const modalNewAccount = document.querySelector('#modal-new-account');
-      modalNewAccount.style.display = 'block';
+      App.getModal('createAccount').open();
     });
 
     let account = this.element.getElementsByClassName('account');
@@ -79,9 +77,9 @@ class AccountsWidget {
    * в боковой колонке
    * */
   clear() {
-    const account = document.getElementsByClassName('account');
+    const account = document.querySelectorAll('.account');
     for(let i = 0; i < account.length; i++) {
-      account[i].textContent = '';
+      account[i].remove();
     }
   }
 

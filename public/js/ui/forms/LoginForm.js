@@ -12,17 +12,12 @@ class LoginForm extends AsyncForm {
   onSubmit(data) {
     User.login(data, (err, response) => {
       if(response) {
-        App.setState( 'user-logged' );
         this.element.reset();
-        this.element.closest('.modal').style.display = '';
+        App.setState( 'user-logged' );
+        new Modal(this.element.closest('.modal')).close(); //не уверен, что это нормально, прошу дать комментарий
       } else {
         console.warn(err, 'не прошла проверку в loginForm onSubmit');
       }
     });
-
-    
-    // const btn = this.element.closest('.modal').querySelector('.btn-primary');
-    // btn.onclick = this.close();
-    // this.element.closest('.modal').style.display = ''; //найти способ реализации через метод close
   }
 }

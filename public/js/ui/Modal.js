@@ -36,8 +36,8 @@ class Modal {
    * Срабатывает после нажатия на элементы, закрывающие окно.
    * Закрывает текущее окно (Modal.close())
    * */
-  onClose(e) {
-    e.onclick = this.close();
+   onClose(e) {
+    this.close();
   }
   /**
    * Открывает окно: устанавливает CSS-свойство display
