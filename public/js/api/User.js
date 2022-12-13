@@ -4,9 +4,7 @@
  * Имеет свойство URL, равное '/user'.
  * */
 class User {
-  constructor() {
-    this.url = '/user';
-  }
+  static url = '/user';
 
   /**
    * Устанавливает текущего пользователя в
@@ -29,7 +27,7 @@ class User {
    * из локального хранилища
    * */
   static current() {
-    return JSON.parse(localStorage.getItem('user'));
+    return localStorage.user ? JSON.parse(localStorage.user) : undefined
   }
 
   /**
@@ -38,8 +36,9 @@ class User {
    * */
   static fetch(callback) {
     createRequest({
-      url: '/user/current',
+      url: `${this.url}/current`,
       method: 'GET',
+      data: this.current(),
       callback: (err, response) => {
         callback(err, response);
         if(response && response.success) {
@@ -60,17 +59,13 @@ class User {
    * */
   static login(data, callback) {
     createRequest({
-      url: '/user/login',
+      url: `${this.url}/login`,
       method: 'POST',
-      responseType: 'json',
       data,
       callback: (err, response) => {
         callback(err, response);
         if(response && response.success) {
           this.setCurrent(response.user);
-        } else {
-          this.unsetCurrent();
-          console.warn(err);
         }
       },
     })
@@ -84,17 +79,13 @@ class User {
    * */
   static register(data, callback) {
     createRequest({
-      url: '/user/register',
+      url: `${this.url}/register`,
       method: 'POST',
-      responseType: 'json',
       data,
       callback: (err, response) => {
         callback(err, response);
         if(response && response.success) {
           this.setCurrent(response.user);
-        } else {
-          this.unsetCurrent();
-          console.warn(err);
         }
       },
     })
@@ -106,16 +97,13 @@ class User {
    * */
   static logout(callback) {
     createRequest({
-      url: '/user/logout',
+      url: `${this.url}/logout`,
       method: 'POST',
-      responseType: 'json',
       data: JSON.parse(localStorage.user),
       callback: (err, response) => {
+        callback(err, response);
         if(response && response.success) {
           this.unsetCurrent(response.user);
-          callback(err, response);
-        } else {
-          console.warn(err);
         }
       },
     })

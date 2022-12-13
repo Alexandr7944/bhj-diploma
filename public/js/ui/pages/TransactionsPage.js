@@ -196,7 +196,7 @@ class TransactionsPage {
   renderTransactions(data){
     const content = document.querySelector('.content');
     content.innerHTML = '';
-    for(let i = 0; i < data.length; i++) {
+    for(let i = data.length - 1; i >= 0; i--) {
       content.innerHTML += this.getTransactionHTML(data[i]);
     }
     this.registerEvents();

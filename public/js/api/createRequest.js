@@ -25,7 +25,6 @@ const createRequest = (options = {}) => {
         xhr.onload = () =>{
             if(xhr.readyState === xhr.DONE && xhr.status == 200) {
                 if(xhr.response) {
-                    console.log(xhr.response.error, xhr.response);
                     if(xhr.response.success) {
                         options.callback(xhr.response.error, xhr.response);
                     } else {
