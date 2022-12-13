@@ -12,7 +12,7 @@ class User {
    * */
   static setCurrent(user) {
     localStorage.setItem('user', JSON.stringify(user));
-    App.update(); //добавлен, чтобы отрисовка происходила после того, как будет авторизован пользователь
+    App.updateWidgets(); //добавлен, чтобы отрисовка происходила после того, как будет авторизован пользователь
   }
 
   /**
